@@ -38,7 +38,7 @@
   (apt-command cache "depends" names))
 
 (defun apt-rdepends (names)
-  (interactive "sPackage names")
+  (interactive "sPackage names: ")
   (apt-command cache "redepends" names))
 
 (defun apt-pkgnames (prefix)
@@ -62,7 +62,7 @@
   (apt-command cache "madison" names ".*"))
 
 (defun apt-command (module command package-names &optional hi-regex) 
-  (let ((buf (get-buffer-create (format "*APT-SEARCH: %s%s" package-names "*"))))
+  (let ((buf (get-buffer-create (format "*APT: %s%s" package-names "*"))))
     (set-buffer buf)
     (start-process "apt-get" 
 		   buf
