@@ -6,7 +6,7 @@
   (apt-command cache "search" names))
 
 (defun apt-download (names)
-  (interactive "sDownload for packages: ")
+  (interactive "sPackages to download: ")
   (apt-command get "download" names)  )
 
 (defun apt-changelog (names)
@@ -59,16 +59,15 @@
 
 (defun apt-madison (names)
   (interactive "sPackage names: ")
-  (apt-command cache "madison" names ".*"))
+  (apt-command cache "madison" names))
 
-(defun apt-command (module command package-names &optional hi-regex) 
+(defun apt-command (module command &optional package-names) 
   (let ((buf (get-buffer-create (format "*APT: %s%s" package-names "*"))))
     (set-buffer buf)
-    (start-process "apt-get" 
+    (apply 'start-process "emacs-apt"
 		   buf
 		   (format "apt-%s" module)
 		   command
-		   package-names)
+		   (split-string package-names "\s+"))
     (setq buffer-read-only t)
-    (switch-to-buffer-other-window buf)
-    (highlight-regexp (or hi-regex "" 'hi-blue))))
+    buf))
