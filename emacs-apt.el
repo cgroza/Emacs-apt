@@ -30,17 +30,21 @@
   (interactive "sapt-cache showpkg ")
   (apt-command cache "showpkg" names))
 
-(defun apt-stats ()
-  (apt-command cache "apt-stats"))
+(defun apt-stats (i)
+  (interactive "i")
+  (apt-command cache "stats"))
 
-(defun apt-showsrc (names)
-  (apt-command cache "showsrc" names))
+(defun apt-showsrc (i)
+  (interactive "i")
+  (apt-command cache "showsrc"))
 
-(defun apt-dump (names)
+(defun apt-dump (i)
+  (interactive "i")
   (apt-command cache "dump"))
 
-(defun apt-dumpavail (names)
-  (apt-command cache "dumpvail"))
+(defun apt-dumpavail (i)
+  (interactive "i")
+  (apt-command cache "dumpavail"))
 
 (defun apt-depends (names)
   (interactive "sapt-cache depends ")
@@ -71,7 +75,9 @@
   (apt-command cache "madison" names))
 
 (defun apt-command (module command &optional package-names) 
-  (let ((buf (get-buffer-create (format "*APT: %s%s" package-names "*"))))
+  (let ((prev-buf (current-buffer))
+	(buf (get-buffer-create (format "*APT-%s %s %s%s" 
+	      (upcase module) (upcase command) package-names "*"))))
     (set-buffer buf)
     (clear-buffer)
     (apply 'start-process "emacs-apt"
@@ -79,7 +85,8 @@
 		   (format "apt-%s" module) ;construct apt command
 		   command
 		   ;; split package list and pass it as arguments
-		   (split-string package-names "\s+"))
+		   (split-string (or package-names "") "\s+"))
     (setq buffer-read-only t)
     (switch-to-buffer-other-window buf)
+    (switch-to-buffer-other-window prev-buf)
     buf))
