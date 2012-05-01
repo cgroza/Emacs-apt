@@ -1,7 +1,6 @@
 (defvar cache "cache")
 (defvar get "get")
-;; (save-excursion (search-forward-regexp ...)
-;;                  (do-something-with (match-begin 0) (match-end 0)))
+
 (defun clear-buffer ()
   "Sets buffer-read-only to nil and deletes region point-min point-max"
   (setq buffer-read-only nil)
@@ -75,7 +74,7 @@
   (interactive "sapt-cache madison ")
   (apt-command cache "madison" names))
 
-(defun apt-command (module command &optional package-names) 
+(defun apt-command (module command &optional package-names high-light-function)
   "module - cahce or get
    command - apt command such as search or pkgnames
    package-names - string containing list of packages separated by spaces
@@ -101,6 +100,8 @@
     (switch-to-buffer-other-window buf)
     (setq buffer-read-only t)
     (goto-char (point-min))
-    (highlight-regexp package-names 'hi-yellow)
+    (if high-light-function 
+	(funcall high-light-function)
+      (highlight-regexp package-names 'hi-yellow))
     (switch-to-buffer-other-window prev-buf)
     buf))
