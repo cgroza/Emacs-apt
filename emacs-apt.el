@@ -1,6 +1,7 @@
 (defvar cache "cache")
 (defvar get "get")
-
+;; (save-excursion (search-forward-regexp ...)
+;;                  (do-something-with (match-begin 0) (match-end 0)))
 (defun clear-buffer ()
   "Sets buffer-read-only to nil and deletes region point-min point-max"
   (setq buffer-read-only nil)
@@ -75,18 +76,31 @@
   (apt-command cache "madison" names))
 
 (defun apt-command (module command &optional package-names) 
+  "module - cahce or get
+   command - apt command such as search or pkgnames
+   package-names - string containing list of packages separated by spaces
+   
+   This function calls apt-cache or apt-get using call-process and returns
+   the output in a buffer. Emacs may freeze until the command has finished."
   (let ((prev-buf (current-buffer))
 	(buf (get-buffer-create (format "*APT-%s %s %s%s" 
 	      (upcase module) (upcase command) package-names "*"))))
+
     (set-buffer buf)
     (clear-buffer)
-    (apply 'start-process "emacs-apt"
-		   buf			    ;output will be directed there
-		   (format "apt-%s" module) ;construct apt command
-		   command
-		   ;; split package list and pass it as arguments
-		   (split-string (or package-names "") "\s+"))
-    (setq buffer-read-only t)
+    (apply 'call-process
+	   ;construct apt command
+	   (format "apt-%s" module) 
+	   nil	    ;/dev/null
+	   buf      ;output will be directed there
+	   nil
+	   command  ;apt command
+	   ;; split package list and pass it as arguments
+	   (split-string (or package-names "") "\s+"))
+
     (switch-to-buffer-other-window buf)
+    (setq buffer-read-only t)
+    (goto-char (point-min))
+    (highlight-regexp package-names 'hi-yellow)
     (switch-to-buffer-other-window prev-buf)
     buf))
