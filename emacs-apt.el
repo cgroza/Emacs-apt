@@ -82,6 +82,7 @@
    This function calls apt-cache or apt-get using call-process and returns
    the output in a buffer. Emacs may freeze until the command has finished."
   (let ((prev-buf (current-buffer))
+	(package-list (split-string (or package-names "") "\s+"))
 	(buf (get-buffer-create (format "*APT-%s %s %s%s" 
 	      (upcase module) (upcase command) package-names "*"))))
 
@@ -95,13 +96,13 @@
 	   nil
 	   command  ;apt command
 	   ;; split package list and pass it as arguments
-	   (split-string (or package-names "") "\s+"))
+	   package-list)
 
     (switch-to-buffer-other-window buf)
     (setq buffer-read-only t)
     (goto-char (point-min))
     (if high-light-function 
 	(funcall high-light-function)
-      (highlight-regexp package-names 'hi-yellow))
+      (highlight-regexp (regexp-opt package-list) 'hi-yellow))
     (switch-to-buffer-other-window prev-buf)
     buf))
