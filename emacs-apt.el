@@ -1,5 +1,11 @@
-(defvar cache "cache")
-(defvar get "get")
+(defconst cache "cache" 
+  "For use inside functions to indicate apt module.")
+
+(defconst get "get" 
+  "For use inside functions to indicate apt module.")
+
+(defvar high-light-color 
+  "*Indicates color to be used for hightlighting.")
 
 (defun clear-buffer ()
   "Sets buffer-read-only to nil and deletes region point-min point-max"
@@ -103,6 +109,6 @@
     (goto-char (point-min))
     (if high-light-function 
 	(funcall high-light-function)
-      (highlight-regexp (regexp-opt package-list) 'hi-yellow))
+      (highlight-regexp (regexp-opt package-list) high-light-color))
     (switch-to-buffer-other-window prev-buf)
     buf))
