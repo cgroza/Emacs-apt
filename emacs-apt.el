@@ -4,8 +4,12 @@
 (defconst get "get" 
   "For use inside functions to indicate apt module.")
 
-(defvar high-light-color 
+(defvar apt-hi-color 
   "*Indicates color to be used for hightlighting.")
+
+(defun apt-set-hi-color (hi-color)
+  "apt-set-hi-color sets apt-hicolor to the value of hi-color."
+  (set 'apt-hi-color hi-color))
 
 (defun clear-buffer ()
   "Sets buffer-read-only to nil and deletes region point-min point-max"
@@ -109,6 +113,6 @@
     (goto-char (point-min))
     (if high-light-function 
 	(funcall high-light-function)
-      (highlight-regexp (regexp-opt package-list) high-light-color))
+      (highlight-regexp (regexp-opt package-list) apt-hi-color))
     (switch-to-buffer-other-window prev-buf)
     buf))
