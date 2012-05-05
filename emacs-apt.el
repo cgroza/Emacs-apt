@@ -109,6 +109,7 @@
 	   package-list)
 
     (switch-to-buffer-other-window buf)
+    (apt-mode)
     (setq buffer-read-only t)
     (goto-char (point-min))
     (if high-light-function 
