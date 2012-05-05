@@ -1,8 +1,10 @@
 (defvar apt-mode-hook nil)
 
+(defun pkg-at-point () (thing-at-point 'symbol))
+
 (defun apt-mode-search ()
   (interactive)
-  (message "APT-MODE-SEARCH HAS BEEN CALLED"))
+  (apt-search (pkg-at-point)))
 
 (defvar apt-mode-map 
   (let ((map (make-keymap)))
