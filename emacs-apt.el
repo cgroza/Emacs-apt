@@ -1,3 +1,5 @@
+(require 'apt-mode)
+
 (defconst cache "cache" 
   "For use inside functions to indicate apt module.")
 

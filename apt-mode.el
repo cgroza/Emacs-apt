@@ -62,5 +62,6 @@
   (use-local-map apt-mode-map)
   (setq major-mode 'apt-mode)
   (setq mode-name "APT")
-  (run-hooks 'apt-mode-hook)
-  (provide 'apt-mode))
+  (run-hooks 'apt-mode-hook))
+
+(provide 'apt-mode)
