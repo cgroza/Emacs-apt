@@ -1,7 +1,9 @@
 (defvar apt-mode-hook nil)
-
+;; syntactic suger
 (defun pkg-at-point () (thing-at-point 'symbol))
 
+;; wrapers around the normal functions that call
+;; equivalents with the symbol at point
 (defun apt-mode-search ()
   "Calls apt-search with symbol at point."
   (interactive)
@@ -62,12 +64,14 @@
   (interactive)
   (apt-madison (pkg-at-point)))
 
+;; define apt-mode
 (define-derived-mode apt-mode
-  nil "APT"
+  text-mode "APT"
   "Major mode for apt-get.
           \\{apt-mode-map}"
   (setq case-fold-search nil))
 
+;; mode key bindings
 (define-key apt-mode-map "\C-cs" 'apt-mode-search)
 (define-key apt-mode-map "\C-cS" 'apt-mode-source)
 (define-key apt-mode-map "\C-cp" 'apt-mode-pkgnames)
@@ -78,15 +82,7 @@
 (define-key apt-mode-map "\C-cc" 'apt-mode-change-log)
 (define-key apt-mode-map "\C-cd" 'apt-mode-depends)
 (define-key apt-mode-map "\C-cD" 'apt-mode-download)
-(define-key apt-mode-map "\c-cr" 'apt-mode-rdepends)
+(define-key apt-mode-map "\C-cr" 'apt-mode-rdepends)
 (define-key apt-mode-map "\C-cm" 'apt-mode-madison)
-
-(defun apt-mode ()
-  (interactive)
-  (kill-all-local-variables)
-  (use-local-map apt-mode-map)
-  (setq major-mode 'apt-mode)
-  (setq mode-name "APT")
-  (run-hooks 'apt-mode-hook))
 
 (provide 'apt-mode)
