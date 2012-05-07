@@ -1,5 +1,4 @@
-(defvar apt-mode-hook nil)
-;; syntactic suger
+;; syntactic sugar
 (defun pkg-at-point () (thing-at-point 'symbol))
 
 ;; wrapers around the normal functions that call
