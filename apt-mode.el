@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ;; Copyright (C) 2012 Groza Cristian
 ;;
 ;; This program is free software: you can redistribute it and/or modify
@@ -13,8 +14,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-(defvar apt-mode-hook nil)
-;; syntactic suger
+;; syntactic sugar
 (defun pkg-at-point () (thing-at-point 'symbol))
 
 ;; wrapers around the normal functions that call
