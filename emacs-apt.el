@@ -23,66 +23,82 @@
 ;; download etc).
 
 (defun apt-search (names)
+  "Invokes apt-cache search {names} and outputs the result."
   (interactive "sapt-cache search ")
   (apt-command cache "search" names))
 
 (defun apt-download (names)
+  "Invokes apt-get download {names} and outputs the result."
   (interactive "apt-get download ")
   (apt-command get "download" names)  )
 
 (defun apt-changelog (names)
+  "Invokes apt-get changelog {names} and outputs the result."
   (interactive "sapt-get changelog ")
   (apt-command get "changelog" names))
 
 (defun apt-source (names)
+  "Invokes apt-get source {names} and outputs the result."
   (interactive "apt-get source ")
   (apt-command get "source" names))
 
 (defun apt-showpkg (names)
+  "Invokes apt-cache showpkg {names} and outputs the result."
   (interactive "sapt-cache showpkg ")
   (apt-command cache "showpkg" names))
 
 (defun apt-stats (i)
+  "Invokes apt-cache stats and outputs the result."
   (interactive "i")
   (apt-command cache "stats"))
 
 (defun apt-showsrc (i)
+  "Invokes apt-cache showsrc and outputs the result."
   (interactive "i")
   (apt-command cache "showsrc"))
 
 (defun apt-dump (i)
+  "Invokes apt-cache dump and outputs the result."
   (interactive "i")
   (apt-command cache "dump"))
 
 (defun apt-dumpavail (i)
+  "Invokes apt-cache dumpavail and outputs the result."
   (interactive "i")
   (apt-command cache "dumpavail"))
 
 (defun apt-depends (names)
+  "Invokes apt-cache depends {names} and outputs the result."
   (interactive "sapt-cache depends ")
   (apt-command cache "depends" names))
 
 (defun apt-rdepends (names)
+  "Invokes apt-cache rdepends {names} and outputs the result."
   (interactive "sapt-cache rdepends ")
   (apt-command cache "redepends" names))
 
 (defun apt-pkgnames (prefix)
+  "Invokes apt-cache pkgnames {prefix} and outputs the result."
   (interactive "sapt-cache pkgnames ")
   (apt-command cache "pkgnames" prefix))
 
 (defun apt-dotty (names)
+  "Invokes apt-cache dotty {names} and outputs the result."
   (interactive "sapt-cache dotty ")
   (apt-command cache "dotty" names))
 
 (defun apt-xvcg (names)
+  "Invokes apt-cache xvcg {names} and outputs the result."
   (interactive "sapt-cache xvcg ")
   (apt-command cache "xvcg" names))
 
 (defun apt-policy (names)
+  "Invokes apt-cache policy {names} and outputs the result."
   (interactive "sapt-cache policy ")
   (apt-command cache "policy" names))
 
 (defun apt-madison (names)
+  "Invokes apt-cache madison {names} and outputs the result."
   (interactive "sapt-cache madison ")
   (apt-command cache "madison" names))
 
