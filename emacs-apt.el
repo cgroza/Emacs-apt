@@ -42,20 +42,22 @@
   (interactive "sapt-cache search ")
   (apt-cmd-sync cache "search" names))
 
-(defun apt-download (names)
-  "Invokes apt-get download {names} and outputs the result."
-  (interactive "sapt-get download ")
-  (apt-cmd-async get "download" names) )
+(defun apt-download (names dl-dir)
+  "Changes current buffer directory to dl-dir and 
+   invokes apt-get download {names} and outputs the result."
+  (interactive "sapt-get download \nDDownload location: ")
+  (apt-cmd-async get "download" names dl-dir))
 
 (defun apt-changelog (names)
   "Invokes apt-get changelog {names} and outputs the result."
   (interactive "sapt-get changelog ")
   (apt-cmd-sync get "changelog" names))
 
-(defun apt-source (names)
-  "Invokes apt-get source {names} and outputs the result."
-  (interactive "sapt-get source ")
-  (apt-cmd-async get "source" names))
+(defun apt-source (names dl-dir)
+  "Changes current buffer directory to dl-dir and 
+   invokes apt-get source {names} and outputs the result."
+  (interactive "sapt-get source \nDDownload location: ")
+  (apt-cmd-async get "source" names dl-dir))
 
 (defun apt-showpkg (names)
   "Invokes apt-cache showpkg {names} and outputs the result."
@@ -117,17 +119,18 @@
   (interactive "sapt-cache madison ")
   (apt-cmd-sync cache "madison" names))
 
-(defun apt-cmd-async (module command &optional package-names)
-"module - cahce or get
-command - apt command such as search or pkgnames
-package-names - string containing list of packages separated by spaces
-This function calls apt-cache or apt-get using call-process and returns
-the output in a buffer. Emacs may freeze until the command has finished.
-Always returns a buffer."
+(defun apt-cmd-async (module command &optional package-names working-dir)
+  "module - cahce or get
+  command - apt command such as search or pkgnames
+  package-names - string containing list of packages separated by spaces
+  This function calls apt-cache or apt-get using call-process and returns
+  the output in a buffer. Emacs may freeze until the command has finished.
+  Always returns a buffer."
   (let ((prev-buf (current-buffer))
 	(buf (get-buffer-create (format "*APT-%s %s %s%s"
 	  (upcase module) (upcase command) package-names "*"))))
     (set-buffer buf)
+    (cd (or working-dir default-directory))
     (clear-buffer)
     (apply 'start-process
 	   "apt-get"
@@ -144,19 +147,21 @@ Always returns a buffer."
     (switch-to-buffer-other-window prev-buf)
     buf))
 
-(defun apt-cmd-sync (module command &optional package-names high-light-function)
-"module - cahce or get
-command - apt command such as search or pkgnames
-package-names - string containing list of packages separated by spaces
-high-light-function - function will to be called to perform highlighting
-This function calls apt-cache or apt-get using call-process and returns
-the output in a buffer. Emacs may freeze until the command has finished.
-Always returns a buffer."
+(defun apt-cmd-sync (module command &optional package-names working-dir
+			    high-light-function)
+  "module - cahce or get
+  command - apt command such as search or pkgnames
+  package-names - string containing list of packages separated by spaces
+  high-light-function - function will to be called to perform highlighting
+  This function calls apt-cache or apt-get using call-process and returns
+  the output in a buffer. Emacs may freeze until the command has finished.
+  Always returns a buffer."
   (let ((prev-buf (current-buffer))
 	(package-list (split-string (or package-names "") "\s+"))
 	(buf (get-buffer-create (format "*APT-%s %s %s%s"
 		 (upcase module) (upcase command) package-names "*"))))
     (set-buffer buf)
+    (cd (or working-dir default-directory))
     (clear-buffer)
     (apply 'call-process
 	   ;construct apt command
