@@ -181,3 +181,5 @@
       (highlight-regexp (regexp-opt package-list) apt-hi-color))
     (switch-to-buffer-other-window prev-buf)
     buf))
+
+(provide 'emacs-apt)
