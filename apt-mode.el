@@ -13,6 +13,8 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+(require 'emacs-apt)
+
 ;; syntactic sugar
 (defun pkg-at-point () (thing-at-point 'symbol))
 
@@ -23,20 +25,20 @@
   (interactive)
   (apt-search (pkg-at-point)))
 
-(defun apt-mode-download ()
+(defun apt-mode-download (download-dir)
   "Calls apt-download with symbol at point."
-  (interactive)
-  (apt-download (pkg-at-point)))
+  (interactive "DDownload location: ")
+  (apt-download (pkg-at-point) download-dir))
 
 (defun apt-mode-change-log ()
   "Calls apt-change-log with symbol at point."
   (interactive)
   (apt-change-log (pkg-at-point)))
 
-(defun apt-mode-source ()
+(defun apt-mode-source (download-dir)
   "Calls apt-source with symbol at point."
-  (interactive)
-  (apt-source (pkg-at-point)))
+  (interactive "DDownload location: ")
+  (apt-source (pkg-at-point) download-dir))
 
 (defun apt-mode-showpkg ()
   "Calls apt-showpkgs with symbol at point."
