@@ -35,6 +35,7 @@ for a string in the minibuffer.
 * apt-mode-download
 * apt-mode-rdepends
 * apt-mode-madison
+
 ###apt-* commands
 * apt-search 
 * apt-download 
