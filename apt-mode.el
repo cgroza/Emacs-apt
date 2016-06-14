@@ -87,18 +87,19 @@
           \\{apt-mode-map}"
   (setq case-fold-search nil))
 
+;; User should define their own key bindings
 ;; mode key bindings
-(define-key apt-mode-map "\C-cs" 'apt-mode-search)
-(define-key apt-mode-map "\C-cS" 'apt-mode-source)
-(define-key apt-mode-map "\C-cp" 'apt-mode-pkgnames)
-(define-key apt-mode-map "\C-cP" 'apt-mode-policy)
-(define-key apt-mode-map "\C-ch" 'apt-mode-showpkg)
-(define-key apt-mode-map "\C-ct" 'apt-mode-dotty)
-(define-key apt-mode-map "\C-cx" 'apt-mode-xvcg)
-(define-key apt-mode-map "\C-cc" 'apt-mode-change-log)
-(define-key apt-mode-map "\C-cd" 'apt-mode-depends)
-(define-key apt-mode-map "\C-cD" 'apt-mode-download)
-(define-key apt-mode-map "\C-cr" 'apt-mode-rdepends)
-(define-key apt-mode-map "\C-cm" 'apt-mode-madison)
+;; (define-key apt-mode-map "\C-cs" 'apt-mode-search)
+;; (define-key apt-mode-map "\C-cS" 'apt-mode-source)
+;; (define-key apt-mode-map "\C-cp" 'apt-mode-pkgnames)
+;; (define-key apt-mode-map "\C-cP" 'apt-mode-policy)
+;; (define-key apt-mode-map "\C-ch" 'apt-mode-showpkg)
+;; (define-key apt-mode-map "\C-ct" 'apt-mode-dotty)
+;; (define-key apt-mode-map "\C-cx" 'apt-mode-xvcg)
+;; (define-key apt-mode-map "\C-cc" 'apt-mode-change-log)
+;; (define-key apt-mode-map "\C-cd" 'apt-mode-depends)
+;; (define-key apt-mode-map "\C-cD" 'apt-mode-download)
+;; (define-key apt-mode-map "\C-cr" 'apt-mode-rdepends)
+;; (define-key apt-mode-map "\C-cm" 'apt-mode-madison)
 
 (provide 'apt-mode)

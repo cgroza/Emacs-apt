@@ -122,7 +122,7 @@
   command - apt command such as search or pkgnames
   package-names - string containing list of packages separated by spaces
   This function calls apt-cache or apt-get using call-process and returns
-  the output in a buffer. Emacs may freeze until the command has finished.
+  the output in a buffer. Emacs will not freeze until the command has finished.
   Always returns a buffer."
   (let ((prev-buf (current-buffer))
 	(buf (get-buffer-create (format "*APT-%s %s %s%s"
