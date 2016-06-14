@@ -128,9 +128,20 @@
   (async-shell-command (format  "sudo apt-get remove %s" names)))
 
 (defun apt-autoremove ()
+  (interactive)
   "Invokes apt-get autoremove {names}."
-  (async-shell-command (format  "sudo apt-get autoremove" )))
+  (async-shell-command (format  "sudo apt-get autoremove")))
 
+
+(defun apt-update ()
+  (interactive)
+  "Invokes apt-get update."
+  (async-shell-command (format  "sudo apt-get update")))
+
+(defun apt-upgrade ()
+  (interactive)
+  "Invokes apt-get upgrade."
+  (async-shell-command (format  "sudo apt-get upgrade")))
 
 (defun apt-cmd-general (async? module command &optional package-names working-dir)
   "async? - async for t, sync for ()
