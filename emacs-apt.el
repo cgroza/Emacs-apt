@@ -117,36 +117,57 @@
   (interactive "sapt-cache madison ")
   (apt-cmd-sync cache "madison" names))
 
-(defun apt-cmd-async (module command &optional package-names working-dir)
-  "module - cahce or get
+(defun apt-install (names)
+  "Invokes apt-get install {names}."
+  (interactive "sapt-get install ")
+  (async-shell-command (format  "apt-get install %s" names)))
+
+(defun apt-remove (names)
+  "Invokes apt-get remove {names}."
+  (interactive "sapt-get remove ")
+  (async-shell-command (format  "sudo apt-get remove %s" names)))
+
+(defun apt-autoremove ()
+  "Invokes apt-get autoremove {names}."
+  (async-shell-command (format  "sudo apt-get autoremove" )))
+
+
+(defun apt-cmd-general (async? module command &optional package-names working-dir)
+  "async? - async for t, sync for ()
+  module - cache or get
   command - apt command such as search or pkgnames
   package-names - string containing list of packages separated by spaces
-  This function calls apt-cache or apt-get using call-process and returns
-  the output in a buffer. Emacs will not freeze until the command has finished.
+  working-dir - directory in which to execute apt
   Always returns a buffer."
-  (let ((prev-buf (current-buffer))
-	(buf (get-buffer-create (format "*APT-%s %s %s%s"
-	  (upcase module) (upcase command) package-names "*"))))
+  (let ((buf (get-buffer-create (format "*APT-%s %s %s%s"
+                                        (upcase module) (upcase command) package-names "*")))
+        (package-list (split-string (or package-names "") "\s+")))
     (set-buffer buf)
     (cd (or working-dir default-directory))
     (clear-buffer)
-    (apply 'start-process
-	   "apt-get"
-	   buf ;output will be directed there
-	   ;construct apt command
-	   (format "apt-%s" module)
-	   command ;apt command
-	   ;; split package list and pass it as arguments
-	   (split-string (or package-names "") "\s+"))
+    (if async?
+        (progn (apply 'start-process
+                        "apt-get"
+                        buf ;; output will be directed there
+                        (format "apt-%s" module) ;; construct apt command
+                        command ;; apt command
+                        ;; split package list and pass it as arguments
+                        package-list))
+      (progn (apply 'call-process
+                      (format "apt-%s" module) ;; construct apt command
+                      nil ;; /dev/null
+                      buf ;; output will be directed there
+                      nil
+                      command ;; apt command
+                      ;; split package list and pass it as arguments
+                      package-list)))
     (switch-to-buffer-other-window buf)
     (apt-mode)
     (setq buffer-read-only t)
     (goto-char (point-min))
-    (switch-to-buffer-other-window prev-buf)
     buf))
 
-(defun apt-cmd-sync (module command &optional package-names working-dir
-			    high-light-function)
+(defun apt-cmd-async (module command &optional package-names working-dir)
   "module - cache or get
   command - apt command such as search or pkgnames
   package-names - string containing list of packages separated by spaces
@@ -154,30 +175,23 @@
   This function calls apt-cache or apt-get using call-process and returns
   the output in a buffer. Emacs may freeze until the command has finished.
   Always returns a buffer."
-  (let ((prev-buf (current-buffer))
-	(package-list (split-string (or package-names "") "\s+"))
-	(buf (get-buffer-create (format "*APT-%s %s %s%s"
-		 (upcase module) (upcase command) package-names "*"))))
-    (set-buffer buf)
-    (cd (or working-dir default-directory))
-    (clear-buffer)
-    (apply 'call-process
-	   ;construct apt command
-	   (format "apt-%s" module)
-	   nil ;/dev/null
-	   buf ;output will be directed there
-	   nil
-	   command ;apt command
-	   ;; split package list and pass it as arguments
-	   package-list)
-    (switch-to-buffer-other-window buf)
-    (apt-mode)
-    (setq buffer-read-only t)
-    (goto-char (point-min))
-    (if high-light-function
-	(funcall high-light-function)
-      (highlight-regexp (regexp-opt package-list) apt-hi-color))
-    (switch-to-buffer-other-window prev-buf)
-    buf))
+  (save-excursion (apt-cmd-general t module command package-names working-dir)))
+
+(defun apt-cmd-sync (module command &optional package-names working-dir
+                            high-light-function)
+  "module - cache or get
+  command - apt command such as search or pkgnames
+  package-names - string containing list of packages separated by spaces
+  high-light-function - function will to be called to perform highlighting
+  This function calls apt-cache or apt-get using call-process and returns
+  the output in a buffer. Emacs may freeze until the command has finished.
+  Always returns a buffer."
+  (save-excursion
+    (let ((aptbuf (apt-cmd-general nil module command package-names working-dir))
+          (package-list (split-string (or package-names "") "\s+")))
+      (if high-light-function
+          (funcall high-light-function)
+        (highlight-regexp (regexp-opt package-list) apt-hi-color))
+      aptbuf)))
 
 (provide 'emacs-apt)
