@@ -13,8 +13,6 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-(require 'apt-mode)
-
 (defconst cache "cache"
   "For use inside functions to indicate apt module.")
 
@@ -92,7 +90,7 @@
 (defun apt-rdepends (names)
   "Invokes apt-cache rdepends {names} and outputs the result."
   (interactive "sapt-cache rdepends ")
-  (apt-cmd-sync cache "redepends" names))
+  (apt-cmd-sync cache "rdepends" names))
 
 (defun apt-pkgnames (prefix)
   "Invokes apt-cache pkgnames {prefix} and outputs the result."
@@ -149,7 +147,7 @@
 
 (defun apt-cmd-sync (module command &optional package-names working-dir
 			    high-light-function)
-  "module - cahce or get
+  "module - cache or get
   command - apt command such as search or pkgnames
   package-names - string containing list of packages separated by spaces
   high-light-function - function will to be called to perform highlighting
