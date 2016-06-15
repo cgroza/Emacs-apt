@@ -75,6 +75,21 @@
   (interactive)
   (apt-policy (pkg-at-point)))
 
+(defun apt-mode-install ()
+  "Calls apt-get install with symbol at point."
+  (interactive)
+  (apt-install (pkg-at-point)))
+
+(defun apt-mode-remove ()
+  "Calls apt-remove with symbol at point."
+  (interactive)
+  (apt-remove (pkg-at-point)))
+
+(defun apt-mode-purge ()
+  "Calls apt-purge with symbol at point."
+  (interactive)
+  (apt-purge (pkg-at-point)))
+
 (defun apt-mode-madison ()
   "Calls apt-madison with symbol at point."
   (interactive)

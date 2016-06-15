@@ -127,6 +127,11 @@
   (interactive "sapt-get remove ")
   (async-shell-command (format  "sudo apt-get remove %s" names)))
 
+(defun apt-purge (names)
+  "Invokes apt-get purge {names}."
+  (interactive "sapt-get purge ")
+  (async-shell-command (format  "sudo apt-get purge %s" names)))
+
 (defun apt-autoremove ()
   (interactive)
   "Invokes apt-get autoremove {names}."
