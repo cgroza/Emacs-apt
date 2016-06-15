@@ -120,7 +120,7 @@
 (defun apt-install (names)
   "Invokes apt-get install {names}."
   (interactive "sapt-get install ")
-  (async-shell-command (format  "apt-get install %s" names)))
+  (async-shell-command (format  "sudo apt-get install %s" names)))
 
 (defun apt-remove (names)
   "Invokes apt-get remove {names}."
