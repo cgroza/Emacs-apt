@@ -80,11 +80,19 @@
   (interactive)
   (apt-madison (pkg-at-point)))
 
+
+;; (defvar apt-mode-map
+;;   (let ((map (make-sparse-keymap)))
+;;     (define-key map "q" 'delete--window)
+;;     map)
+;;   "Keymap for apt-mode.")
+
 ;; define apt-mode
 (define-derived-mode apt-mode
   text-mode "APT"
   "Major mode for apt-get.
           \\{apt-mode-map}"
+  (read-only-mode t)
   (setq case-fold-search nil))
 
 ;; User should define their own key bindings
