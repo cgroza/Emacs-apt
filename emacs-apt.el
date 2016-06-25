@@ -159,6 +159,7 @@
                                         (upcase module) (upcase command) package-names "*")))
         (package-list (split-string (or package-names "") "\s+")))
     (set-buffer buf)
+    (apt-mode)
     (cd (or working-dir default-directory))
     (clear-buffer)
     (if async?
@@ -178,7 +179,6 @@
                       ;; split package list and pass it as arguments
                       package-list)))
     (switch-to-buffer-other-window buf)
-    (apt-mode)
     (setq buffer-read-only t)
     (goto-char (point-min))
     buf))
