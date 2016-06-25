@@ -101,22 +101,28 @@
     (modify-syntax-entry ?. "_" st)
     st))
 
+(defvar apt-mode-map
+  (let ((map (make-keymap)))
+    (define-key map "q" 'quit-window)
+    (define-key map "s" 'apt-mode-search)
+    (define-key map "S" 'apt-mode-source)
+    (define-key map "p" 'apt-mode-pkgnames)
+    (define-key map "P" 'apt-mode-policy)
+    (define-key map "h" 'apt-mode-showpkg)
+    (define-key map "t" 'apt-mode-dotty)
+    (define-key map "x" 'apt-mode-xvcg)
+    (define-key map "c" 'apt-mode-change-log)
+    (define-key map "d" 'apt-mode-depends)
+    (define-key map "D" 'apt-mode-download)
+    (define-key map "r" 'apt-mode-rdepends)
+    (define-key map "m" 'apt-mode-madison)
+    map
+    ))
+
 ;; define apt-mode
 (define-derived-mode apt-mode special-mode "APT")
 
 ;; User should define their own key bindings
 ;; mode key bindings
-;; (define-key apt-mode-map "\C-cs" 'apt-mode-search)
-;; (define-key apt-mode-map "\C-cS" 'apt-mode-source)
-;; (define-key apt-mode-map "\C-cp" 'apt-mode-pkgnames)
-;; (define-key apt-mode-map "\C-cP" 'apt-mode-policy)
-;; (define-key apt-mode-map "\C-ch" 'apt-mode-showpkg)
-;; (define-key apt-mode-map "\C-ct" 'apt-mode-dotty)
-;; (define-key apt-mode-map "\C-cx" 'apt-mode-xvcg)
-;; (define-key apt-mode-map "\C-cc" 'apt-mode-change-log)
-;; (define-key apt-mode-map "\C-cd" 'apt-mode-depends)
-;; (define-key apt-mode-map "\C-cD" 'apt-mode-download)
-;; (define-key apt-mode-map "\C-cr" 'apt-mode-rdepends)
-;; (define-key apt-mode-map "\C-cm" 'apt-mode-madison)
 
 (provide 'apt-mode)
