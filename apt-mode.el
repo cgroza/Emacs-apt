@@ -96,19 +96,30 @@
   (apt-madison (pkg-at-point)))
 
 
-;; (defvar apt-mode-map
-;;   (let ((map (make-sparse-keymap)))
-;;     (define-key map "q" 'delete--window)
-;;     map)
-;;   "Keymap for apt-mode.")
+(defvar apt-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map "Q" 'delete--window)
+    map)
+  "Keymap for apt-mode.")
+
+(defvar apt-mode-syntax-table
+  (let ((st (make-syntax-table)))
+    (modify-syntax-entry ?. "_" st)
+    st))
 
 ;; define apt-mode
-(define-derived-mode apt-mode
-  text-mode "APT"
+(defun apt-mode ()
   "Major mode for apt-get.
           \\{apt-mode-map}"
+  (interactive)
+  (kill-all-local-variables)
   (read-only-mode t)
-  (setq case-fold-search nil))
+  (set-syntax-table apt-mode-syntax-table)
+  (use-local-map apt-mode-map)
+  (setq major-mode 'apt-mode)
+  (setq mode-name "APT")
+  (run-hooks 'apt-mode-hook)
+  )
 
 ;; User should define their own key bindings
 ;; mode key bindings
