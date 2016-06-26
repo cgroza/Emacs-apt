@@ -158,10 +158,11 @@
   (let ((buf (get-buffer-create (format "*APT-%s %s %s%s"
                                         (upcase module) (upcase command) package-names "*")))
         (package-list (split-string (or package-names "") "\s+")))
-    (set-buffer buf)
+    (switch-to-buffer-other-window buf)
     (apt-mode)
     (cd (or working-dir default-directory))
     (clear-buffer)
+    ;; async or sync? Handle both cases
     (if async?
         (progn (apply 'start-process
                         "apt-get"
@@ -178,7 +179,6 @@
                       command ;; apt command
                       ;; split package list and pass it as arguments
                       package-list)))
-    (switch-to-buffer-other-window buf)
     (setq buffer-read-only t)
     (goto-char (point-min))
     buf))
