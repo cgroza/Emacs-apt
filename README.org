@@ -1,4 +1,4 @@
-#+TOC
+#+TOC: headlines 2
 
 * Emacs-apt
 ** Description
