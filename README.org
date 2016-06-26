@@ -1,3 +1,5 @@
+#+TOC
+
 * Emacs-apt
 ** Description
 Emacs-apt is a project providing apt-mode in order to facilitate
@@ -14,10 +16,27 @@ run an operation such as apt-get download on it with a single
 key sequence.
 
 Actions that require root privileges start a shell.
+** Keybindings
+The following default keybindings are provided in APT mode:
+| Key | Function            |
+| q   | quit-window         |
+| s   | apt-mode-search     |
+| S   | apt-mode-source     |
+| p   | apt-mode-pkgnames   |
+| P   | apt-mode-policy     |
+| h   | apt-mode-showpkg    |
+| t   | apt-mode-dotty      |
+| x   | apt-mode-xvcg       |
+| c   | apt-mode-change-log |
+| d   | apt-mode-depends    |
+| D   | apt-mode-download   |
+| r   | apt-mode-rdepends   |
+| m   | apt-mode-madison    |
+
 ** Configuration 
-Users should define their own keybindings. Note that apt-mode-* functions
-execute their actions on a symbol at point, while apt-* functions ask the user
-for a string in the minibuffer.
+Users should define their own keybindings for unbound functions. Note that
+apt-mode-* functions execute their actions on a symbol at point, while apt-*
+functions ask the user for a string in the minibuffer.
 
 *** apt-mode-* commands:
 + apt-mode-change-log
