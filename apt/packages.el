@@ -13,11 +13,12 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-(require 'apt-mode)
+(setq apt-packages '((apt-mode :location local)))
+(defun apt/init-apt-mode ()
+  (use-package apt-mode
+    :config
+    (progn
+      (require 'evil-evilified-state)
+      (evilified-state-evilify-map apt-mode-map
+        :mode apt-mode))))
 
-(defun apt/evilify-apt-mode ()
-  "Sets up apt-mode evilified maps"
-  (evilified-state-evilify-map apt-mode-map
-    :mode apt-mode))
-
-(apt/evilify-apt-mode)
