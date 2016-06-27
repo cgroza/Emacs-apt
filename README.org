@@ -16,6 +16,13 @@ run an operation such as apt-get download on it with a single
 key sequence.
 
 Actions that require root privileges start a shell.
+** Installation
+*** Vanilla Emacs
+Emacs users only need to load the files in the =apt-mode= directory.
+*** Spacemacs
+The =apt= directory contains the spacemacs configuration layer. It can be added in
+the =private= section of =emacs.d=. Note that the files in =apt-mode= only need to be
+present in the load-path. They do not need to be loaded in =.spacemacs=.
 ** Keybindings
 The following default keybindings are provided in APT mode:
 | Key | Function            |
@@ -33,7 +40,7 @@ The following default keybindings are provided in APT mode:
 | r   | apt-mode-rdepends   |
 | m   | apt-mode-madison    |
 
-** Configuration 
+** Commands
 Users should define their own keybindings for unbound functions. Note that
 apt-mode-* functions execute their actions on a symbol at point, while apt-*
 functions ask the user for a string in the minibuffer.
