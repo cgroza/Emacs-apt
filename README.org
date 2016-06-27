@@ -18,7 +18,14 @@ key sequence.
 Actions that require root privileges start a shell.
 ** Installation
 *** Vanilla Emacs
-Emacs users only need to load the files in the =apt-mode= directory.
+Emacs users only need to load the files in the =apt-mode= directory by adding the
+following to =.emacs=:
+#+BEGIN_SRC emacs-lisp :export code
+  ;; add apt-mode directory in load-path
+  (push apt-mode-directory load-path)
+  ;; load apt-mode
+  (require 'apt-mode)
+#+END_SRC
 *** Spacemacs
 The =apt= directory contains the spacemacs configuration layer. It can be added in
 the =private= section of =emacs.d=. Note that the files in =apt-mode= only need to be
