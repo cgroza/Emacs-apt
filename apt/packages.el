@@ -17,8 +17,7 @@
 (defun apt/init-apt-mode ()
   (use-package apt-mode
     :config
-    (progn
-      (require 'evil-evilified-state)
-      (evilified-state-evilify-map apt-mode-map
-        :mode apt-mode))))
+    (require 'evil-evilified-state)
+    (evilified-state-evilify-map apt-mode-map
+      :mode apt-mode)))
 
