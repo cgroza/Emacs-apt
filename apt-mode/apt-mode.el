@@ -99,7 +99,7 @@
 (defvar apt-mode-syntax-table
   (let ((st (make-syntax-table)))
     (modify-syntax-entry ?. "_" st)
-    st))
+    st) "Points are part of package names in apt.")
 
 (defvar apt-mode-map
   (let ((map (make-keymap)))
@@ -119,10 +119,7 @@
     map
     ))
 
-;; define apt-mode
+;; define apt-mode with no self inserting keybindings
 (define-derived-mode apt-mode special-mode "APT")
-
-;; User should define their own key bindings
-;; mode key bindings
 
 (provide 'apt-mode)
