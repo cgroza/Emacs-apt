@@ -192,20 +192,20 @@
   (save-excursion (apt-cmd-general t module command package-names working-dir)))
 
 (defun apt-cmd-sync (module command &optional package-names working-dir
-                            high-light-function)
+                            highlight-func)
   "module - cache or get
   command - apt command such as search or pkgnames
   package-names - string containing list of packages separated by spaces
   working-dir - directory in which to execute apt
-  high-light-function - function will to be called to perform highlighting
+  highlight-func - function will to be called to perform highlighting
   This function calls apt-cache or apt-get using call-process and returns
   the output in a buffer. Emacs may freeze until the command has finished.
   Always returns a buffer."
   (save-excursion
     (let ((aptbuf (apt-cmd-general nil module command package-names working-dir))
           (package-list (split-string (or package-names "") "\s+")))
-      (if high-light-function
-          (funcall high-light-function)
+      (if highlight-func
+          (funcall highlight-func)
         (highlight-regexp (regexp-opt package-list) apt-hi-color))
       aptbuf)))
 

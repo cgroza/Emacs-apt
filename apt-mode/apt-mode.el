@@ -104,6 +104,7 @@
 (defvar apt-mode-map
   (let ((map (make-keymap)))
     (define-key map "q" 'quit-window)
+    (define-key map "i" 'apt-mode-install)
     (define-key map "s" 'apt-mode-search)
     (define-key map "S" 'apt-mode-source)
     (define-key map "p" 'apt-mode-pkgnames)
